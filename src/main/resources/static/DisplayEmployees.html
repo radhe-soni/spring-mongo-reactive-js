@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="employeesContainer"></div>
+	<script
+		src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.1/dist/global/Rx.umd.js"></script>
+	<script>
+fetchEmployess();
+function fetchEmployess(){
+    /*Rx.Observable.fromEvent(document, 'onload').subscribe(() => fetch('/employee')
+    .then(response => response.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+	);*/
+	var evtSource = new EventSource('employees');
+	evtSource.onmessage = function(e) {
+
+  console.log("message: " + e.data);
+  }
+	/*Rx.Observable.fromPromise(fetch('employees').then(response => response.body))
+.subscribe(response => console.log('Success:', JSON.stringify(response)),
+	error => console.error('Error:', error));*/
+}
+</script>
+</body>
+</html>

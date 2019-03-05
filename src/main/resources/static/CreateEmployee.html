@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<form method="POST" id="employeeForm">
+		<label for="name">Name:</label>
+		<input type="text" name="name" id="name" />
+		<label for="name">Salary:</label>
+		<input type="number" name="salary" id="salary" />
+		<input type="submit" value="submit" />
+		<script>
+			saveEmployee(); 
+			function saveEmployee() {
+				const employeeForm = document.getElementById("employeeForm");
+				
+				employeeForm.addEventListener("submit", function(event) {
+        		event.preventDefault();
+				const data = {
+					name: employeeForm.elements["name"].value,
+					salary: employeeForm.elements["salary"].value
+				}
+				console.log(data);
+				fetch('/employee', {
+					method: "POST", // *GET, POST, PUT, DELETE, etc.
+					mode: "cors", // no-cors, cors, *same-origin
+					cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: "same-origin", // include, *same-origin, omit
+					headers: {
+						"Content-Type": "application/json",
+						// "Content-Type": "application/x-www-form-urlencoded",
+					},
+					redirect: "manual", // manual, *follow, error
+					referrer: "no-referrer", // no-referrer, *client
+					body: JSON.stringify(data) // body data type must match "Content-Type" header
+				})
+					.then(response => response.json())
+					.then(response => console.log('Success:', JSON.stringify(response)));
+				});
+			}
+		</script>
+</body>
+
+</html>
